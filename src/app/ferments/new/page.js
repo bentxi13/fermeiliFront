@@ -1,7 +1,13 @@
 'use client'
+import NewFermentForm from "@/app/components/Form"
 
 export default function NewFerment() {
   return (
-    <div>NewFerment</div>
+
+    <div className="container">
+      
+      <NewFermentForm />
+    </div>
+
   )
 }
