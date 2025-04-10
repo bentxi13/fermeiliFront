@@ -19,6 +19,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <h1 className='text-center my-5'>Ferments available</h1>
       {data.map((ferment) => (
         <FermentCard key={ferment.id} {...ferment} />
       ))}
