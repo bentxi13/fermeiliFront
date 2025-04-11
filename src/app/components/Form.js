@@ -25,39 +25,35 @@ function NewFermentForm({user}) {
   const addFerment = async (event) => {
     event.preventDefault()
 
-
-      const newFerment = {
-        name: fermentName,
-        ingredients: ingredients,
-        instructions: instructions,
-        fermentation_time: fermentationTime,
-      };
-
-      try {
-        const response = await fetch('http://localhost:3002/ferment_recipes', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newFerment),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Ferment added:', data);
-          console.log(data);
-          // opcionalmente reseteas el formulario
-          setFermentName("");
-          setIngredients("");
-          setInstructions("");
-          setFermentationTime("");
-        } else {
-          console.error('Failed to add ferment');
-        }
-      } catch (error) {
-        console.error('Error adding ferment:', error);
-      }
+    const newFerment = {
+      name: fermentName,
+      ingredients: ingredients,
+      instructions: instructions,
+      fermentation_time: fermentationTime,
     };
+
+    try {
+      const response = await fetch('http://localhost:3002/ferment_recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newFerment),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFermentName("");
+        setIngredients("");
+        setInstructions("");
+        setFermentationTime("");
+      } else {
+        console.error('Failed to add ferment');
+      }
+    } catch (error) {
+      console.error('Error adding ferment:', error);
+    }
+  };
 
 
   return (
@@ -104,12 +100,13 @@ function NewFermentForm({user}) {
       </Form.Group>
 
       <Button
-        variant="primary"
+        variant="success"
         type="submit"
         className="mb-3 "
         onClick={(e) => addFerment(e)}>
         Submit
       </Button>
+      <Button href="/ferments" className="mb-3 mx-2" variant="secondary">Volver</Button>
     </Form>
     );
 
