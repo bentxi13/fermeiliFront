@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,13 +39,14 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed");
+        throw new Error(
+          data.error || "Inicio de sesión fallido, intenta de nuevo"
+        );
       }
 
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
+      login(data.user, data.token);
 
-      router.push("/ferments");
+      router.push("/");
     } catch (err) {
       setError(err.message);
     } finally {

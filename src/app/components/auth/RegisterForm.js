@@ -40,7 +40,9 @@ export default function RegisterForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Registration failed");
+        throw new Error(
+          data.error || "El registro ha fallado, confirma los datos"
+        );
       }
 
       localStorage.setItem("user", JSON.stringify(data));
