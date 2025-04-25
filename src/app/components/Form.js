@@ -2,11 +2,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 
-function NewFermentForm({user}) {
-  const [fermentName, setFermentName] = useState("test234");
-  const [ingredients, setIngredients] = useState("vdfbedberb");
-  const [instructions, setInstructions] = useState("eberberber");
-  const [fermentationTime, setFermentationTime] = useState("1");
+function NewFermentForm() {
+  const [fermentName, setFermentName] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [fermentationTime, setFermentationTime] = useState("");
 
   const handleNameChange= (event)  =>{
     setFermentName(event.target.value);

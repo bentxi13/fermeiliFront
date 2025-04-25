@@ -29,6 +29,22 @@ const Page = () => {
     }
   };
 
+  const deleteFerment = async (id) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:3002/ferment_recipes/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        setData((prev) => prev.filter((ferment) => ferment.id !== id));
+      } else {
+        console.error('Error deleting ferment');
+      }
+    } catch (err) {
+      console.error('Error deleting ferment:', err);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
 
@@ -43,8 +59,9 @@ const Page = () => {
       </button>
 
       {data.map((ferment) => (
-        <FermentCard key={ferment.id} {...ferment} />
+        <FermentCard key={ferment.id} {...ferment} onDelete={deleteFerment} />
       ))}
+
     </div>
   );
 };
