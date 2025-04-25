@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
+
 const Page = () => {
   const [data, setData] = useState([]);
   const { user } = useAuth();
@@ -30,6 +31,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+
       <h1 className="text-center my-5 text-black font-bold">
         Fermentos Disponibles
       </h1>
