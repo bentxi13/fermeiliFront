@@ -1,22 +1,33 @@
-'use client'
-import React from 'react';
-import FermentCard from '../components/FermentCard';
-import { useEffect, useState } from 'react'
-import Button from 'react-bootstrap/Button';
+"use client";
+import React from "react";
+import FermentCard from "../components/FermentCard";
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 
 const Page = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const getFerments = async () => {
-      const res = await fetch('http://127.0.0.1:3002/ferment_recipes')
-      const json = await res.json()
-      setData(json)
-    }
+      const res = await fetch("http://127.0.0.1:3002/ferment_recipes");
+      const json = await res.json();
+      setData(json);
+    };
 
-    getFerments()
-  }, [])
+    getFerments();
+  }, []);
+
+  const handleAddingFerment = () => {
+    if (user) {
+      router.push("/ferments/new");
+    } else {
+      router.push("/login");
+    }
+  };
 
   const deleteFerment = async (id) => {
     try {
@@ -35,18 +46,24 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300">
-      <h1 className='text-center my-5'>Ferments available</h1>
-      <Button href="/ferments/new" className='mb-3' variant="success">
-        Add New Ferment
-      </Button>
-      <div className='flex flex-wrap justify-center'>
-        {data.map((ferment) => (
-          <FermentCard key={ferment.id} {...ferment} onDelete={deleteFerment} />
-        ))}
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+
+      <h1 className="text-center my-5 text-black font-bold">
+        Fermentos Disponibles
+      </h1>
+      <button
+        onClick={handleAddingFerment}
+        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+      >
+        Crear Fermento
+      </button>
+
+      {data.map((ferment) => (
+        <FermentCard key={ferment.id} {...ferment} onDelete={deleteFerment} />
+      ))}
+
     </div>
   );
-}
+};
 
 export default Page;
