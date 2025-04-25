@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
-export default function FermentCard({ name, ingredients, fermentation_time, image }) {
+export default function FermentCard({ name, ingredients, fermentation_time, image, id, onDelete }) {
   return (
     <Card className='card m-1 d-flex flex-wrap w-25 border-2 border-success p-2'>
       <div className="d-flex align-items-center me-4">
@@ -16,9 +16,10 @@ export default function FermentCard({ name, ingredients, fermentation_time, imag
           <Card.Text>
             <span className='fw-bold'>Ferment time:</span> {fermentation_time} dias
           </Card.Text>
+          <Button variant="danger" className="mt-3" onClick={() => onDelete(id)}>Delete</Button>
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center col-4">
-          <Button className="my-3" variant="outline-success">Ver</Button>
+          <Button className="my-3" variant="outline-success" href={`/ferments/${id}`}>Ver</Button>
           <Card.Img src={image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREBQwZzEfwRfq_u8D0XiEpqVUIRwsZjG2HHg&s"} />
         </div>
       </div>

@@ -18,15 +18,33 @@ const Page = () => {
     getFerments()
   }, [])
 
+  const deleteFerment = async (id) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:3002/ferment_recipes/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        setData((prev) => prev.filter((ferment) => ferment.id !== id));
+      } else {
+        console.error('Error deleting ferment');
+      }
+    } catch (err) {
+      console.error('Error deleting ferment:', err);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300">
       <h1 className='text-center my-5'>Ferments available</h1>
-      <Button href="/ferments/new" className='mb-5'>
+      <Button href="/ferments/new" className='mb-3' variant="success">
         Add New Ferment
       </Button>
-      {data.map((ferment) => (
-        <FermentCard key={ferment.id} {...ferment} />
-      ))}
+      <div className='flex flex-wrap justify-center'>
+        {data.map((ferment) => (
+          <FermentCard key={ferment.id} {...ferment} onDelete={deleteFerment} />
+        ))}
+      </div>
     </div>
   );
 }
